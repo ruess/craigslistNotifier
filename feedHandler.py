@@ -79,16 +79,24 @@ class feed(object):
 		return feedData
 
 	def getNewEntries(self,feedData = None, oldEntries = None):
+		import time
+
 		if not feedData: feedData = self.feedData
 		if not oldEntries: oldEntries = self.oldEntries
 		newEntries = []
 		for i in range(0, len(feedData['entries'])):
+
+			#Set random time delays - KRM
+			from random import randint
+			from time import sleep
+			sleep(randint(10,100)) # delays for seconds randomly 10-100
+
 			entry = feedData['entries'][i].link
 			if entry not in oldEntries:
 				newEntries.append({
 					'url': feedData['entries'][i].link,
-					'summary': feedData['entries'][i].summary,
-					'title' :  feedData['entries'][i].title,
+					'summary': feedData['entries'][i].summary.encode("utf-8"),
+					'title' :  feedData['entries'][i].title.encode("utf-8"),
 					'imgs' :   getCListImgs(feedData['entries'][i].link)
 					})
 
